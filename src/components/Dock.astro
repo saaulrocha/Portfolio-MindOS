@@ -1,0 +1,73 @@
+---
+// Dock component - macOS-style bottom dock
+import { Brain, HardDrive, Cpu, Package, Sparkles, Terminal } from 'lucide-astro';
+
+const modules = [
+  { id: 'kernel', name: 'About', Icon: Brain, color: 'from-blue-500 to-cyan-500' },
+  { id: 'memory', name: 'Education', Icon: HardDrive, color: 'from-purple-500 to-pink-500' },
+  { id: 'processes', name: 'Experience', Icon: Cpu, color: 'from-green-500 to-emerald-500' },
+  { id: 'modules', name: 'Skills', Icon: Package, color: 'from-orange-500 to-yellow-500' },
+  { id: 'artifacts', name: 'Projects', Icon: Sparkles, color: 'from-pink-500 to-rose-500' },
+  { id: 'logs', name: 'Contact', Icon: Terminal, color: 'from-cyan-500 to-blue-500' },
+];
+---
+
+<nav class="dock-container fixed bottom-4 left-1/2 -translate-x-1/2 z-50">
+  <div class="glass-heavy rounded-2xl p-2 flex items-end gap-1">
+    {modules.map((module, index) => (
+      <a 
+        href={`#${module.id}`}
+        class="dock-item group relative flex flex-col items-center"
+        style={`--delay: ${index * 50}ms`}
+        data-module={module.id}
+      >
+        <!-- Icon Container -->
+        <div class={`
+          relative w-12 h-12 rounded-xl 
+          bg-gradient-to-br ${module.color}
+          flex items-center justify-center
+          transition-all duration-300 ease-out
+          group-hover:scale-110 group-hover:-translate-y-2
+          group-hover:shadow-lg group-hover:shadow-current/30
+          group-active:scale-95
+        `}>
+          <module.Icon class="w-6 h-6 text-white" strokeWidth={1.5} />
+          
+          <!-- Reflection -->
+          <div class="absolute inset-0 rounded-xl bg-gradient-to-b from-white/20 to-transparent opacity-50" />
+        </div>
+        
+        <!-- Tooltip -->
+        <div class="
+          absolute -top-10 left-1/2 -translate-x-1/2
+          px-3 py-1.5 rounded-lg
+          bg-os-surface border border-os-border
+          text-xs font-medium text-os-text
+          opacity-0 scale-95 translate-y-2
+          group-hover:opacity-100 group-hover:scale-100 group-hover:translate-y-0
+          transition-all duration-200
+          pointer-events-none whitespace-nowrap
+          shadow-xl
+        ">
+          {module.name}
+          <!-- Tooltip Arrow -->
+          <div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-os-surface border-r border-b border-os-border rotate-45" />
+        </div>
+        
+        <!-- Active Indicator -->
+        <div class="w-1 h-1 rounded-full bg-os-text-muted mt-1.5 opacity-0 group-hover:opacity-100 transition-opacity" />
+      </a>
+    ))}
+  </div>
+</nav>
+
+<style>
+  .dock-container {
+    animation: slide-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  
+  .dock-item {
+    animation: fade-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: var(--delay);
+  }
+</style>

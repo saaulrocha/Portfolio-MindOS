@@ -1,0 +1,410 @@
+---
+import DesktopLayout from '../layouts/DesktopLayout.astro';
+import BootSequence from '../components/BootSequence.astro';
+import Window from '../components/Window.astro';
+import { profile, experience, education, technologies, languages, projects } from '../data/profile';
+import { 
+  Brain, HardDrive, Cpu, Package, Sparkles, Terminal,
+  MapPin, Calendar, Github, Linkedin, Mail, Phone, ExternalLink,
+  GraduationCap, Briefcase, Code, CircleCheck, Clock
+} from 'lucide-astro';
+---
+
+<DesktopLayout title="MindOS — Saúl Rocha">
+  <!-- Boot Sequence -->
+  <BootSequence />
+  
+  <!-- Desktop Content -->
+  <div class="container mx-auto px-4 py-6 max-w-5xl space-y-6">
+    
+    <!-- Hero Section: Kernel -->
+    <Window id="kernel" title="About — Saúl Rocha" icon={Brain}>
+      <div class="flex flex-col md:flex-row gap-8">
+        <!-- Left: Photo & Quick Info -->
+        <div class="flex flex-col items-center md:items-start gap-4 shrink-0">
+          <div class="relative group">
+            <img 
+              src="/saul-rocha.png" 
+              alt="Saúl Rocha"
+              class="w-32 h-32 rounded-2xl object-cover border-2 border-os-border group-hover:border-os-accent/50 transition-colors"
+            />
+            <div class="absolute -bottom-2 -right-2 w-6 h-6 rounded-full bg-os-success border-4 border-os-bg" title="Available" />
+          </div>
+          
+          <!-- Status -->
+          <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-os-success/10 border border-os-success/20">
+            <div class="w-2 h-2 rounded-full bg-os-success animate-pulse" />
+            <span class="text-xs font-medium text-os-success">Open to work</span>
+          </div>
+        </div>
+        
+        <!-- Right: Info -->
+        <div class="flex-1 space-y-5">
+          <!-- Name & Title -->
+          <div>
+            <h1 class="text-2xl md:text-3xl font-bold text-os-text">{profile.name}</h1>
+            <p class="text-os-accent font-medium mt-1">{profile.title}</p>
+          </div>
+          
+          <!-- Bio -->
+          <p class="text-os-text-secondary leading-relaxed">
+            {profile.bio}
+          </p>
+          
+          <!-- Quick Stats -->
+          <div class="flex flex-wrap gap-3">
+            <div class="flex items-center gap-2 text-sm text-os-text-muted">
+              <MapPin class="w-4 h-4" />
+              <span>{profile.location}</span>
+            </div>
+            {languages.map(lang => (
+              <div class="flex items-center gap-2 text-sm text-os-text-muted">
+                <span class="w-5 h-3.5 rounded-sm bg-os-surface flex items-center justify-center text-[10px] font-bold">{lang.code}</span>
+                <span>{lang.level}</span>
+              </div>
+            ))}
+          </div>
+          
+          <!-- Links -->
+          <div class="flex flex-wrap gap-2">
+            <a 
+              href={profile.links.github}
+              target="_blank"
+              class="flex items-center gap-2 px-4 py-2 rounded-lg bg-os-surface hover:bg-os-surface-light border border-os-border hover:border-os-accent/30 transition-all text-sm font-medium"
+            >
+              <Github class="w-4 h-4" />
+              GitHub
+            </a>
+            <a 
+              href={profile.links.linkedin}
+              target="_blank"
+              class="flex items-center gap-2 px-4 py-2 rounded-lg bg-os-surface hover:bg-os-surface-light border border-os-border hover:border-os-accent/30 transition-all text-sm font-medium"
+            >
+              <Linkedin class="w-4 h-4" />
+              LinkedIn
+            </a>
+            <a 
+              href={`mailto:${profile.email}`}
+              class="flex items-center gap-2 px-4 py-2 rounded-lg bg-os-accent text-white hover:bg-os-accent-light transition-all text-sm font-medium"
+            >
+              <Mail class="w-4 h-4" />
+              Contact
+            </a>
+          </div>
+        </div>
+      </div>
+    </Window>
+    
+    <!-- Two Column Layout -->
+    <div class="grid md:grid-cols-2 gap-6">
+      
+      <!-- Experience: Processes -->
+      <Window id="processes" title="Experience" icon={Briefcase}>
+        <div class="space-y-5">
+          {experience.map((exp, i) => (
+            <div 
+              class="group relative pl-6 pb-5 border-l-2 border-os-border last:pb-0 last:border-l-transparent hover:border-l-os-accent transition-colors"
+              style={`animation: slide-up 0.4s ease-out ${i * 100}ms both`}
+            >
+              <!-- Timeline Dot -->
+              <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-os-bg border-2 border-os-border group-hover:border-os-accent transition-colors flex items-center justify-center">
+                {exp.status === 'active' && <div class="w-2 h-2 rounded-full bg-os-success" />}
+              </div>
+              
+              <!-- Content -->
+              <div class="space-y-2">
+                <div class="flex items-start justify-between gap-2">
+                  <div>
+                    <h4 class="font-semibold text-os-text group-hover:text-os-accent transition-colors">{exp.company}</h4>
+                    <p class="text-sm text-os-accent">{exp.role}</p>
+                  </div>
+                  <span class="text-xs font-mono text-os-text-muted shrink-0">{exp.period}</span>
+                </div>
+                
+                <p class="text-sm text-os-text-muted">{exp.description}</p>
+                
+                <div class="flex flex-wrap gap-1.5 pt-1">
+                  {exp.tech.map(t => (
+                    <span class="px-2 py-0.5 text-xs rounded bg-os-surface border border-os-border text-os-text-secondary">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Window>
+      
+      <!-- Education: Memory -->
+      <Window id="memory" title="Education" icon={GraduationCap}>
+        <div class="space-y-4">
+          {education.map((edu, i) => (
+            <div 
+              class="group p-4 rounded-xl bg-os-surface/50 border border-os-border hover:border-os-accent/30 transition-all"
+              style={`animation: slide-up 0.4s ease-out ${i * 100}ms both`}
+            >
+              <div class="flex items-start justify-between gap-3">
+                <div class="flex-1 min-w-0">
+                  <h4 class="font-semibold text-os-text group-hover:text-os-accent transition-colors">
+                    {edu.institution}
+                  </h4>
+                  <p class="text-sm text-os-text-muted mt-0.5">{edu.subtitle}</p>
+                  <p class="text-sm text-os-text-secondary mt-2">{edu.program}</p>
+                  <p class="text-xs text-os-text-muted mt-1">{edu.focus}</p>
+                </div>
+                <span class="text-[11px] font-mono text-os-text-muted whitespace-nowrap">{edu.period}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Window>
+    </div>
+    
+    <!-- Skills: Modules -->
+    <Window id="modules" title="Skills & Technologies" icon={Code}>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+        {technologies.map((tech, i) => (
+          <div 
+            class="group p-4 rounded-xl bg-os-surface/50 border border-os-border hover:border-os-accent/30 hover:bg-os-surface transition-all cursor-default"
+            style={`animation: scale-in 0.3s ease-out ${i * 50}ms both`}
+          >
+            <div class="flex items-center gap-3">
+              <div 
+                class="w-10 h-10 rounded-lg flex items-center justify-center"
+                style={`background: ${tech.color}20`}
+              >
+                <div class="w-3 h-3 rounded-full" style={`background: ${tech.color}`} />
+              </div>
+              <div class="flex-1 min-w-0">
+                <h4 class="font-medium text-os-text text-sm">{tech.name}</h4>
+                <div class="flex items-center gap-2 mt-1.5">
+                  <div class="flex-1 h-1.5 bg-os-bg rounded-full overflow-hidden">
+                    <div 
+                      class="h-full rounded-full transition-all duration-1000"
+                      style={`width: ${tech.level}%; background: ${tech.color}`}
+                    />
+                  </div>
+                  <span class="text-[10px] font-mono text-os-text-muted">{tech.level}%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Window>
+    
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         PROJECTS SECTION — Floating OS Windows
+         Style: Dark UI, cyan glow, macOS controls (in image), soft shadows
+    ═══════════════════════════════════════════════════════════════════════ -->
+    <section id="artifacts" class="py-8">
+      <!-- Section Header -->
+      <div class="flex items-center gap-3 mb-8">
+        <Sparkles class="w-5 h-5 text-cyan-400" />
+        <h2 class="text-xl font-semibold text-white">Projects</h2>
+        <div class="flex-1 h-px bg-gradient-to-r from-cyan-500/20 to-transparent" />
+      </div>
+      
+      <!-- Floating Windows Grid -->
+      <div class="grid md:grid-cols-2 gap-8">
+        
+        <!-- Project Window 1: Impulso Web -->
+        <article class="project-window group" style="animation: float-in 0.6s ease-out both">
+          <!-- Window Frame -->
+          <div class="
+            relative rounded-2xl overflow-hidden
+            bg-[#0D0F12]
+            border border-white/[0.08]
+            shadow-[0_20px_40px_rgba(0,0,0,0.35)]
+            transition-all duration-500 ease-out
+            hover:shadow-[0_25px_50px_rgba(0,0,0,0.4),0_0_60px_rgba(34,211,238,0.15)]
+            hover:border-cyan-500/20
+            hover:scale-[1.02]
+          ">
+            <!-- Mockup Image -->
+            <div class="relative">
+              <img 
+                src="/project-impulso.png" 
+                alt="Impulso Web"
+                class="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+              />
+              <!-- Subtle overlay on hover -->
+              <div class="absolute inset-0 bg-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            </div>
+            
+            <!-- Project Info -->
+            <div class="p-5 border-t border-white/[0.05]">
+              <h3 class="text-lg font-semibold text-white group-hover:text-cyan-400 transition-colors">
+                Impulso Web
+              </h3>
+              <p class="mt-2 text-sm text-gray-400 leading-relaxed">
+                Página web profesional para una agencia digital. Diseño moderno, optimizado para SEO y centrado en la conversión.
+              </p>
+              
+              <!-- Tags -->
+              <div class="flex flex-wrap gap-2 mt-4">
+                <span class="px-2.5 py-1 text-xs rounded-md bg-white/[0.05] text-gray-300 border border-white/[0.08]">HTML</span>
+                <span class="px-2.5 py-1 text-xs rounded-md bg-white/[0.05] text-gray-300 border border-white/[0.08]">CSS</span>
+                <span class="px-2.5 py-1 text-xs rounded-md bg-white/[0.05] text-gray-300 border border-white/[0.08]">JavaScript</span>
+              </div>
+              
+              <!-- Action Button -->
+              <a 
+                href="https://impulsoweb.netlify.app/" 
+                target="_blank"
+                class="
+                  mt-5 inline-flex items-center gap-2 
+                  px-4 py-2 rounded-lg
+                  bg-cyan-500/10 text-cyan-400
+                  border border-cyan-500/20
+                  text-sm font-medium
+                  transition-all duration-300
+                  hover:bg-cyan-500/20 hover:border-cyan-500/40
+                  hover:shadow-[0_0_20px_rgba(34,211,238,0.2)]
+                "
+              >
+                <ExternalLink class="w-4 h-4" />
+                Open App
+              </a>
+            </div>
+          </div>
+        </article>
+        
+        <!-- Project Window 2: Crypto Dashboard -->
+        <article class="project-window group" style="animation: float-in 0.6s ease-out 0.15s both">
+          <!-- Window Frame -->
+          <div class="
+            relative rounded-2xl overflow-hidden
+            bg-[#0D0F12]
+            border border-white/[0.08]
+            shadow-[0_20px_40px_rgba(0,0,0,0.35)]
+            transition-all duration-500 ease-out
+            hover:shadow-[0_25px_50px_rgba(0,0,0,0.4),0_0_60px_rgba(34,211,238,0.15)]
+            hover:border-cyan-500/20
+            hover:scale-[1.02]
+          ">
+            <!-- Mockup Image -->
+            <div class="relative px-6 pt-6 pb-2">
+              <img 
+                src="/project-crypto.png" 
+                alt="Crypto Dashboard"
+                class="w-full aspect-[4/3] object-cover rounded-t-lg transition-transform duration-700 group-hover:scale-[1.03]"
+              />
+              <!-- Subtle overlay on hover -->
+              <div class="absolute inset-0 bg-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            </div>
+            
+            <!-- Project Info -->
+            <div class="p-5 border-t border-white/[0.05]">
+              <h3 class="text-lg font-semibold text-white group-hover:text-cyan-400 transition-colors">
+                Crypto Dashboard
+              </h3>
+              <p class="mt-2 text-sm text-gray-400 leading-relaxed">
+                Dashboard de criptomonedas en tiempo real con datos de mercado, gráficos y filtros dinámicos.
+              </p>
+              
+              <!-- Tags -->
+              <div class="flex flex-wrap gap-2 mt-4">
+                <span class="px-2.5 py-1 text-xs rounded-md bg-white/[0.05] text-gray-300 border border-white/[0.08]">TypeScript</span>
+                <span class="px-2.5 py-1 text-xs rounded-md bg-white/[0.05] text-gray-300 border border-white/[0.08]">Angular</span>
+                <span class="px-2.5 py-1 text-xs rounded-md bg-white/[0.05] text-gray-300 border border-white/[0.08]">REST API</span>
+              </div>
+              
+              <!-- Action Button -->
+              <a 
+                href="https://v0-crypto-dashboard-snowy-alpha.vercel.app/" 
+                target="_blank"
+                class="
+                  mt-5 inline-flex items-center gap-2 
+                  px-4 py-2 rounded-lg
+                  bg-cyan-500/10 text-cyan-400
+                  border border-cyan-500/20
+                  text-sm font-medium
+                  transition-all duration-300
+                  hover:bg-cyan-500/20 hover:border-cyan-500/40
+                  hover:shadow-[0_0_20px_rgba(34,211,238,0.2)]
+                "
+              >
+                <ExternalLink class="w-4 h-4" />
+                Open App
+              </a>
+            </div>
+          </div>
+        </article>
+        
+      </div>
+      
+      <!-- GitHub Link -->
+      <a 
+        href={profile.links.github}
+        target="_blank"
+        class="
+          mt-8 flex items-center justify-center gap-2 
+          p-4 rounded-xl 
+          border border-dashed border-white/10 
+          text-sm text-gray-500
+          transition-all duration-300
+          hover:border-cyan-500/30 hover:text-gray-300 hover:bg-white/[0.02]
+        "
+      >
+        <Github class="w-4 h-4" />
+        More projects on GitHub
+        <ExternalLink class="w-3 h-3" />
+      </a>
+    </section>
+    
+    <style>
+      @keyframes float-in {
+        from {
+          opacity: 0;
+          transform: translateY(30px) scale(0.95);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+    </style>
+    
+    <!-- Contact: Logs -->
+    <Window id="logs" title="Contact" icon={Terminal} variant="terminal">
+      <div class="space-y-4 terminal-text">
+        <!-- Terminal Commands -->
+        <div class="space-y-2">
+          <p><span class="text-os-success">~</span> <span class="text-os-text-muted">cat</span> contact.json</p>
+          <div class="pl-4 text-os-text-secondary">
+            <p>{"{"}</p>
+            <p class="pl-4">"email": "<a href={`mailto:${profile.email}`} class="text-os-accent hover:underline">{profile.email}</a>",</p>
+            <p class="pl-4">"phone": "<span class="text-os-text">{profile.phone}</span>",</p>
+            <p class="pl-4">"linkedin": "<a href={profile.links.linkedin} class="text-os-accent hover:underline">saaulrocha</a>",</p>
+            <p class="pl-4">"github": "<a href={profile.links.github} class="text-os-accent hover:underline">saaulrocha</a>"</p>
+            <p>{"}"}</p>
+          </div>
+        </div>
+        
+        <div class="h-px bg-os-border" />
+        
+        <!-- Quick Actions -->
+        <div class="flex flex-wrap gap-3 pt-2">
+          <a 
+            href={`mailto:${profile.email}`}
+            class="flex-1 min-w-[180px] flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-os-accent text-white font-medium hover:bg-os-accent-light transition-all"
+          >
+            <Mail class="w-4 h-4" />
+            Send Email
+          </a>
+          <a 
+            href={profile.links.linkedin}
+            target="_blank"
+            class="flex-1 min-w-[180px] flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-os-surface-light border border-os-border font-medium hover:border-os-accent/30 transition-all"
+          >
+            <Linkedin class="w-4 h-4" />
+            Connect
+          </a>
+        </div>
+      </div>
+    </Window>
+    
+  </div>
+</DesktopLayout>

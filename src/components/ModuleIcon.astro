@@ -1,0 +1,58 @@
+---
+// ModuleIcon component - Interactive icon for desktop/dock
+interface Props {
+  id: string;
+  name: string;
+  icon: string;
+  description?: string;
+  delay?: number;
+  size?: 'sm' | 'md' | 'lg';
+}
+
+const { id, name, icon, description, delay = 0, size = 'md' } = Astro.props;
+
+const sizeClasses = {
+  sm: 'w-12 h-12 text-xl',
+  md: 'w-14 h-14 text-2xl',
+  lg: 'w-20 h-20 text-4xl'
+};
+---
+
+<a 
+  href={`#${id}`}
+  class:list={[
+    "module-icon group relative flex flex-col items-center gap-1 p-2 rounded-xl transition-all duration-300",
+    "hover:bg-os-surface-light hover:scale-110 focus:outline-none focus:ring-2 focus:ring-os-accent"
+  ]}
+  style={`animation-delay: ${delay}ms`}
+  data-module={id}
+  aria-label={`Abrir módulo ${name}: ${description}`}
+>
+  <!-- Icon -->
+  <div class:list={[
+    "flex items-center justify-center rounded-xl bg-os-surface-light border border-os-border",
+    "group-hover:border-os-accent/50 group-hover:shadow-lg group-hover:shadow-os-accent/20",
+    "transition-all duration-300",
+    sizeClasses[size]
+  ]}>
+    <span class="transition-transform duration-300 group-hover:scale-110">{icon}</span>
+  </div>
+  
+  <!-- Label -->
+  <span class="text-[10px] font-medium text-os-text-muted group-hover:text-os-text transition-colors duration-300">
+    {name}
+  </span>
+  
+  <!-- Tooltip -->
+  {description && (
+    <div class="absolute -top-10 left-1/2 -translate-x-1/2 px-3 py-1.5 rounded-lg bg-os-surface border border-os-border text-xs text-os-text opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none z-10">
+      {description}
+    </div>
+  )}
+</a>
+
+<style>
+  .module-icon {
+    animation: fade-in 0.4s ease-out both;
+  }
+</style>

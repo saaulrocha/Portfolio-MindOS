@@ -1,0 +1,70 @@
+---
+import '../styles/global.css';
+import Dock from '../components/Dock.astro';
+import { User, Clock, Wifi, Battery } from 'lucide-astro';
+
+interface Props {
+  title?: string;
+  showDock?: boolean;
+}
+
+const { title = "MindOS", showDock = true } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="MindOS - Portfolio de Saúl Rocha, desarrollador web junior" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+  </head>
+  <body class="min-h-screen bg-os-bg overflow-x-hidden">
+    <!-- System Menu Bar (macOS style) -->
+    <header class="fixed top-0 left-0 right-0 h-7 glass-heavy z-50 flex items-center justify-between px-4 border-b border-os-border/50">
+      <!-- Left: System Name -->
+      <div class="flex items-center gap-4">
+        <div class="flex items-center gap-2">
+          <div class="w-4 h-4 rounded-full bg-gradient-to-br from-os-accent to-os-accent-light flex items-center justify-center">
+            <span class="text-[8px] font-bold text-white">M</span>
+          </div>
+          <span class="text-os-text text-xs font-semibold">MindOS</span>
+        </div>
+        <nav class="flex items-center gap-3 text-xs text-os-text-secondary">
+          <a href="#kernel" class="hover:text-os-text transition-colors">About</a>
+          <a href="#processes" class="hover:text-os-text transition-colors">Experience</a>
+          <a href="#modules" class="hover:text-os-text transition-colors">Skills</a>
+          <a href="#logs" class="hover:text-os-text transition-colors">Contact</a>
+        </nav>
+      </div>
+      
+      <!-- Right: Status Icons -->
+      <div class="flex items-center gap-3 text-xs text-os-text-secondary">
+        <Wifi class="w-3.5 h-3.5" />
+        <Battery class="w-3.5 h-3.5" />
+        <span id="system-time" class="font-mono text-[11px]"></span>
+      </div>
+    </header>
+
+    <!-- Main Desktop Area -->
+    <main class="pt-10 pb-24 min-h-screen">
+      <slot />
+    </main>
+
+    <!-- Dock -->
+    {showDock && <Dock />}
+
+    <!-- System Time Script -->
+    <script>
+      function updateTime() {
+        const now = new Date();
+        const timeStr = now.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+        const el = document.getElementById('system-time');
+        if (el) el.textContent = timeStr;
+      }
+      updateTime();
+      setInterval(updateTime, 1000);
+    </script>
+  </body>
+</html>
