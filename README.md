@@ -1,43 +1,79 @@
-# Astro Starter Kit: Minimal
+# 🧠 MindOS Portfolio
 
-```sh
-npm create astro@latest -- --template minimal
+> A personal portfolio reimagined as a futuristic, web-based Operating System.
+
+![MindOS Preview](/public/mindos-preview.png)
+
+**MindOS** is a unique interactive portfolio experience designed to look and feel like a next-generation desktop operating system. Built with **Astro**, **TypeScript**, and **Tailwind CSS**, it features a fully functional window management system, a cinematic boot sequence, and a sleek, glassmorphic UI.
+
+## ✨ Features
+
+- **🖥️ Desktop Environment**: A fully responsive desktop interface with a macOS-inspired dock and menu bar.
+- **🪟 Window System**: Draggable, floating windows with "traffic light" controls and smooth animations.
+- **🚀 Boot Sequence**: A cinematic, terminal-style boot animation that welcomes visitors.
+- **🎨 Glassmorphism UI**: extensive use of backdrop-blur, subtle gradients, and glowing borders for a premium feel.
+- **📂 Project Showcase**: "Running Apps" style project display with interactive hover effects and OS-like window frames.
+- **⚡ High Performance**: Built on Astro for blazing fast load times and zero-JS default (where possible).
+
+## 🛠️ Tech Stack
+
+- **Framework**: [Astro](https://astro.build/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Animations**: Native CSS Keyframes & Transitions
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js (v18 or higher)
+- npm or pnpm
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/saaulrocha/Portfolio-MindOS.git
+   cd Portfolio-MindOS
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Start the development server**
+   ```bash
+   npm run dev
+   ```
+
+4. **Build for production**
+   ```bash
+   npm run build
+   ```
+
+## 📁 Project Structure
+
+```
+src/
+├── components/    # UI Components (Dock, Window, BootSequence, etc.)
+├── layouts/       # Main Desktop Layout
+├── pages/         # Application Routes (index.astro)
+├── styles/        # Global CSS & Design System
+└── data/          # Profile & Project Data (profile.ts)
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## 🎨 Customization
 
-## 🚀 Project Structure
+You can easily customize the portfolio by editing `src/data/profile.ts`. This file contains all the personal information, experience, education, and project data used throughout the site.
 
-Inside of your Astro project, you'll see the following folders and files:
+## 📄 License
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+This project is open source and available under the [MIT License](LICENSE).
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+---
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+<p align="center">
+  Built with ❤️ by <a href="https://saulrocha.com">Saúl Rocha</a>
+</p>
