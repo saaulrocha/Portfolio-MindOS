@@ -12,18 +12,24 @@ const modules = [
 ];
 ---
 
-<nav class="dock-container fixed bottom-4 left-1/2 -translate-x-1/2 z-50">
-  <div class="glass-heavy rounded-2xl p-1.5 md:p-2 flex items-end gap-0.5 md:gap-2">
+<nav class="dock-container fixed bottom-0 left-0 right-0 md:bottom-4 md:left-1/2 md:right-auto md:-translate-x-1/2 z-50">
+  <div class="
+    glass-heavy 
+    flex items-center justify-around md:items-end md:justify-center 
+    p-2 md:gap-2
+    border-t border-os-border/50 md:border md:rounded-2xl
+    w-full md:w-auto
+  ">
     {modules.map((module, index) => (
       <a 
         href={`#${module.id}`}
-        class="dock-item group relative flex flex-col items-center"
+        class="dock-item group relative flex flex-col items-center p-2 md:p-0"
         style={`--delay: ${index * 50}ms`}
         data-module={module.id}
       >
         <!-- Icon Container -->
         <div class={`
-          relative w-10 h-10 md:w-12 md:h-12 rounded-xl 
+          relative w-8 h-8 md:w-12 md:h-12 rounded-lg md:rounded-xl 
           bg-gradient-to-br ${module.color}
           flex items-center justify-center
           transition-all duration-300 ease-out
@@ -31,14 +37,15 @@ const modules = [
           group-hover:shadow-lg group-hover:shadow-current/30
           group-active:scale-95
         `}>
-          <module.Icon class="w-5 h-5 md:w-6 md:h-6 text-white" strokeWidth={1.5} />
+          <module.Icon class="w-4 h-4 md:w-6 md:h-6 text-white" strokeWidth={1.5} />
           
           <!-- Reflection -->
-          <div class="absolute inset-0 rounded-xl bg-gradient-to-b from-white/20 to-transparent opacity-50" />
+          <div class="absolute inset-0 rounded-lg md:rounded-xl bg-gradient-to-b from-white/20 to-transparent opacity-50" />
         </div>
         
-        <!-- Tooltip -->
+        <!-- Tooltip (Desktop Only) -->
         <div class="
+          hidden md:block
           absolute -top-10 left-1/2 -translate-x-1/2
           px-3 py-1.5 rounded-lg
           bg-os-surface border border-os-border
