@@ -13,7 +13,7 @@ const modules = [
 ---
 
 <nav class="dock-container fixed bottom-4 left-1/2 -translate-x-1/2 z-50">
-  <div class="glass-heavy rounded-2xl p-2 flex items-end gap-1">
+  <div class="glass-heavy rounded-2xl p-1.5 md:p-2 flex items-end gap-0.5 md:gap-2">
     {modules.map((module, index) => (
       <a 
         href={`#${module.id}`}
@@ -23,7 +23,7 @@ const modules = [
       >
         <!-- Icon Container -->
         <div class={`
-          relative w-12 h-12 rounded-xl 
+          relative w-10 h-10 md:w-12 md:h-12 rounded-xl 
           bg-gradient-to-br ${module.color}
           flex items-center justify-center
           transition-all duration-300 ease-out
@@ -31,7 +31,7 @@ const modules = [
           group-hover:shadow-lg group-hover:shadow-current/30
           group-active:scale-95
         `}>
-          <module.Icon class="w-6 h-6 text-white" strokeWidth={1.5} />
+          <module.Icon class="w-5 h-5 md:w-6 md:h-6 text-white" strokeWidth={1.5} />
           
           <!-- Reflection -->
           <div class="absolute inset-0 rounded-xl bg-gradient-to-b from-white/20 to-transparent opacity-50" />

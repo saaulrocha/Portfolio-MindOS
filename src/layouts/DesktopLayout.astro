@@ -26,12 +26,12 @@ const { title = "MindOS", showDock = true } = Astro.props;
       <!-- Left: System Name -->
       <div class="flex items-center gap-4">
         <div class="flex items-center gap-2">
-          <div class="w-4 h-4 rounded-full bg-gradient-to-br from-os-accent to-os-accent-light flex items-center justify-center">
-            <span class="text-[8px] font-bold text-white">M</span>
+          <div class="w-5 h-5 rounded-full bg-gradient-to-br from-os-accent to-os-accent-light flex items-center justify-center">
+            <span class="text-[10px] font-bold text-white">M</span>
           </div>
-          <span class="text-os-text text-xs font-semibold">MindOS</span>
+          <span class="text-os-text text-sm font-semibold">MindOS</span>
         </div>
-        <nav class="flex items-center gap-3 text-xs text-os-text-secondary">
+        <nav class="hidden md:flex items-center gap-3 text-xs text-os-text-secondary">
           <a href="#kernel" class="hover:text-os-text transition-colors">About</a>
           <a href="#processes" class="hover:text-os-text transition-colors">Experience</a>
           <a href="#modules" class="hover:text-os-text transition-colors">Skills</a>
@@ -41,9 +41,9 @@ const { title = "MindOS", showDock = true } = Astro.props;
       
       <!-- Right: Status Icons -->
       <div class="flex items-center gap-3 text-xs text-os-text-secondary">
-        <Wifi class="w-3.5 h-3.5" />
-        <Battery class="w-3.5 h-3.5" />
-        <span id="system-time" class="font-mono text-[11px]"></span>
+        <Wifi class="w-4 h-4" />
+        <Battery class="w-4 h-4" />
+        <span id="system-time" class="font-mono text-xs"></span>
       </div>
     </header>
 
