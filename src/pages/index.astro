@@ -6,16 +6,22 @@ import { profile, experience, education, technologies, languages, projects } fro
 import { 
   Brain, HardDrive, Cpu, Package, Sparkles, Terminal,
   MapPin, Calendar, Github, Linkedin, Mail, Phone, ExternalLink,
-  GraduationCap, Briefcase, Code, CircleCheck, Clock
+  GraduationCap, Briefcase, Code, CircleCheck, Clock, ShoppingBag
 } from 'lucide-astro';
+import LockScreen from '../components/LockScreen.astro';
+import AppStore from '../components/AppStore.astro';
+import SkillsCloud from '../components/SkillsCloud.astro';
 ---
 
 <DesktopLayout title="MindOS — Saúl Rocha">
-  <!-- Boot Sequence -->
-  <BootSequence />
+  <!-- Overlays (Lock Screen, Boot Sequence) -->
+  <Fragment slot="overlay">
+    <LockScreen />
+    <BootSequence />
+  </Fragment>
   
-  <!-- Desktop Content -->
-  <div class="container mx-auto px-4 py-6 max-w-5xl space-y-6">
+  <!-- Desktop Content (Hidden when locked) -->
+  <div id="desktop-environment" class="container mx-auto px-4 py-6 max-w-5xl space-y-6 transition-opacity duration-700 opacity-0 pointer-events-none">
     
     <!-- Hero Section: Kernel -->
     <Window id="kernel" title="About — Saúl Rocha" icon={Brain}>
@@ -59,8 +65,14 @@ import {
             </div>
             {languages.map(lang => (
               <div class="flex items-center gap-2 text-sm text-os-text-muted">
-                <span class="w-5 h-3.5 rounded-sm bg-os-surface flex items-center justify-center text-[10px] font-bold">{lang.code}</span>
-                <span>{lang.level}</span>
+                <span 
+                  class="w-6 h-4 rounded text-[10px] font-bold flex items-center justify-center text-white"
+                  style={`background: ${lang.code === 'ES' ? '#c60b1e' : '#012169'}`}
+                >
+                  {lang.code}
+                </span>
+                <span>{lang.name}</span>
+                <span class="text-os-text-secondary">({lang.level})</span>
               </div>
             ))}
           </div>
@@ -163,209 +175,15 @@ import {
     
     <!-- Skills: Modules -->
     <Window id="modules" title="Skills & Technologies" icon={Code}>
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-        {technologies.map((tech, i) => (
-          <div 
-            class="group p-4 rounded-xl bg-os-surface/50 border border-os-border hover:border-os-accent/30 hover:bg-os-surface transition-all cursor-default"
-            style={`animation: scale-in 0.3s ease-out ${i * 50}ms both`}
-          >
-            <div class="flex items-center gap-3">
-              <div 
-                class="w-10 h-10 rounded-lg flex items-center justify-center"
-                style={`background: ${tech.color}20`}
-              >
-                <div class="w-3 h-3 rounded-full" style={`background: ${tech.color}`} />
-              </div>
-              <div class="flex-1 min-w-0">
-                <h4 class="font-medium text-os-text text-sm">{tech.name}</h4>
-                <div class="flex items-center gap-2 mt-1.5">
-                  <div class="flex-1 h-1.5 bg-os-bg rounded-full overflow-hidden">
-                    <div 
-                      class="h-full rounded-full transition-all duration-1000"
-                      style={`width: ${tech.level}%; background: ${tech.color}`}
-                    />
-                  </div>
-                  <span class="text-[10px] font-mono text-os-text-muted">{tech.level}%</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+      <SkillsCloud />
     </Window>
     
     <!-- ═══════════════════════════════════════════════════════════════════════
-         PROJECTS SECTION — Floating OS Windows
-         Style: Dark UI, cyan glow, macOS controls (in image), soft shadows
+         PROJECTS SECTION — App Store Style
     ═══════════════════════════════════════════════════════════════════════ -->
-    <section id="artifacts" class="py-8">
-      <!-- Section Header -->
-      <div class="flex items-center gap-3 mb-8">
-        <Sparkles class="w-5 h-5 text-cyan-400" />
-        <h2 class="text-xl font-semibold text-white">Projects</h2>
-        <div class="flex-1 h-px bg-gradient-to-r from-cyan-500/20 to-transparent" />
-      </div>
-      
-      <!-- Floating Windows Grid -->
-      <div class="grid md:grid-cols-2 gap-8">
-        
-        <!-- Project Window 1: Impulso Web -->
-        <article class="project-window group" style="animation: float-in 0.6s ease-out both">
-          <!-- Window Frame -->
-          <div class="
-            relative rounded-2xl overflow-hidden
-            bg-[#0D0F12]
-            border border-white/[0.08]
-            shadow-[0_20px_40px_rgba(0,0,0,0.35)]
-            transition-all duration-500 ease-out
-            hover:shadow-[0_25px_50px_rgba(0,0,0,0.4),0_0_60px_rgba(34,211,238,0.15)]
-            hover:border-cyan-500/20
-            hover:scale-[1.02]
-          ">
-            <!-- Mockup Image -->
-            <div class="relative">
-              <img 
-                src="/project-impulso.png" 
-                alt="Impulso Web"
-                class="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-              />
-              <!-- Subtle overlay on hover -->
-              <div class="absolute inset-0 bg-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            </div>
-            
-            <!-- Project Info -->
-            <div class="p-5 border-t border-white/[0.05]">
-              <h3 class="text-lg font-semibold text-white group-hover:text-cyan-400 transition-colors">
-                Impulso Web
-              </h3>
-              <p class="mt-2 text-sm text-gray-400 leading-relaxed">
-                Página web profesional para una agencia digital. Diseño moderno, optimizado para SEO y centrado en la conversión.
-              </p>
-              
-              <!-- Tags -->
-              <div class="flex flex-wrap gap-2 mt-4">
-                <span class="px-2.5 py-1 text-xs rounded-md bg-white/[0.05] text-gray-300 border border-white/[0.08]">HTML</span>
-                <span class="px-2.5 py-1 text-xs rounded-md bg-white/[0.05] text-gray-300 border border-white/[0.08]">CSS</span>
-                <span class="px-2.5 py-1 text-xs rounded-md bg-white/[0.05] text-gray-300 border border-white/[0.08]">JavaScript</span>
-              </div>
-              
-              <!-- Action Button -->
-              <a 
-                href="https://impulsoweb.netlify.app/" 
-                target="_blank"
-                class="
-                  mt-5 inline-flex items-center gap-2 
-                  px-4 py-2 rounded-lg
-                  bg-cyan-500/10 text-cyan-400
-                  border border-cyan-500/20
-                  text-sm font-medium
-                  transition-all duration-300
-                  hover:bg-cyan-500/20 hover:border-cyan-500/40
-                  hover:shadow-[0_0_20px_rgba(34,211,238,0.2)]
-                "
-              >
-                <ExternalLink class="w-4 h-4" />
-                Open App
-              </a>
-            </div>
-          </div>
-        </article>
-        
-        <!-- Project Window 2: Crypto Dashboard -->
-        <article class="project-window group" style="animation: float-in 0.6s ease-out 0.15s both">
-          <!-- Window Frame -->
-          <div class="
-            relative rounded-2xl overflow-hidden
-            bg-[#0D0F12]
-            border border-white/[0.08]
-            shadow-[0_20px_40px_rgba(0,0,0,0.35)]
-            transition-all duration-500 ease-out
-            hover:shadow-[0_25px_50px_rgba(0,0,0,0.4),0_0_60px_rgba(34,211,238,0.15)]
-            hover:border-cyan-500/20
-            hover:scale-[1.02]
-          ">
-            <!-- Mockup Image -->
-            <div class="relative px-6 pt-6 pb-2">
-              <img 
-                src="/project-crypto.png" 
-                alt="Crypto Dashboard"
-                class="w-full aspect-[4/3] object-cover rounded-t-lg transition-transform duration-700 group-hover:scale-[1.03]"
-              />
-              <!-- Subtle overlay on hover -->
-              <div class="absolute inset-0 bg-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            </div>
-            
-            <!-- Project Info -->
-            <div class="p-5 border-t border-white/[0.05]">
-              <h3 class="text-lg font-semibold text-white group-hover:text-cyan-400 transition-colors">
-                Crypto Dashboard
-              </h3>
-              <p class="mt-2 text-sm text-gray-400 leading-relaxed">
-                Dashboard de criptomonedas en tiempo real con datos de mercado, gráficos y filtros dinámicos.
-              </p>
-              
-              <!-- Tags -->
-              <div class="flex flex-wrap gap-2 mt-4">
-                <span class="px-2.5 py-1 text-xs rounded-md bg-white/[0.05] text-gray-300 border border-white/[0.08]">TypeScript</span>
-                <span class="px-2.5 py-1 text-xs rounded-md bg-white/[0.05] text-gray-300 border border-white/[0.08]">Angular</span>
-                <span class="px-2.5 py-1 text-xs rounded-md bg-white/[0.05] text-gray-300 border border-white/[0.08]">REST API</span>
-              </div>
-              
-              <!-- Action Button -->
-              <a 
-                href="https://v0-crypto-dashboard-snowy-alpha.vercel.app/" 
-                target="_blank"
-                class="
-                  mt-5 inline-flex items-center gap-2 
-                  px-4 py-2 rounded-lg
-                  bg-cyan-500/10 text-cyan-400
-                  border border-cyan-500/20
-                  text-sm font-medium
-                  transition-all duration-300
-                  hover:bg-cyan-500/20 hover:border-cyan-500/40
-                  hover:shadow-[0_0_20px_rgba(34,211,238,0.2)]
-                "
-              >
-                <ExternalLink class="w-4 h-4" />
-                Open App
-              </a>
-            </div>
-          </div>
-        </article>
-        
-      </div>
-      
-      <!-- GitHub Link -->
-      <a 
-        href={profile.links.github}
-        target="_blank"
-        class="
-          mt-8 flex items-center justify-center gap-2 
-          p-4 rounded-xl 
-          border border-dashed border-white/10 
-          text-sm text-gray-500
-          transition-all duration-300
-          hover:border-cyan-500/30 hover:text-gray-300 hover:bg-white/[0.02]
-        "
-      >
-        <Github class="w-4 h-4" />
-        More projects on GitHub
-        <ExternalLink class="w-3 h-3" />
-      </a>
-    </section>
-    
-    <style>
-      @keyframes float-in {
-        from {
-          opacity: 0;
-          transform: translateY(30px) scale(0.95);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0) scale(1);
-        }
-      }
-    </style>
+    <Window id="artifacts" title="App Store — Projects" icon={ShoppingBag}>
+      <AppStore />
+    </Window>
     
     <!-- Contact: Logs -->
     <Window id="logs" title="Contact" icon={Terminal} variant="terminal">

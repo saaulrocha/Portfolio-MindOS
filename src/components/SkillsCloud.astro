@@ -1,0 +1,121 @@
+---
+// SkillsCloud - Innovative technology display without broken SVG icons
+import { technologies } from "../data/profile";
+
+// Group technologies by category
+const categories = {
+  language: { name: "Languages", emoji: "💻" },
+  framework: { name: "Frameworks", emoji: "⚡" },
+  tool: { name: "Tools", emoji: "🛠️" }
+};
+
+const grouped = technologies.reduce((acc, tech) => {
+  const cat = tech.category || 'tool';
+  if (!acc[cat]) acc[cat] = [];
+  acc[cat].push(tech);
+  return acc;
+}, {} as Record<string, typeof technologies>);
+---
+
+<div class="space-y-8">
+  <!-- Header Stats -->
+  <div class="flex items-center justify-between">
+    <div>
+      <h3 class="text-lg font-semibold text-white">Tech Stack</h3>
+      <p class="text-white/50 text-sm">{technologies.length} technologies mastered</p>
+    </div>
+    <div class="flex gap-2">
+      {Object.entries(categories).map(([key, cat]) => (
+        <span class="px-3 py-1 rounded-full text-xs bg-white/5 text-white/60">
+          {cat.emoji} {grouped[key]?.length || 0}
+        </span>
+      ))}
+    </div>
+  </div>
+
+  <!-- Tech Categories -->
+  {Object.entries(categories).map(([key, cat]) => grouped[key]?.length > 0 && (
+    <section class="space-y-3">
+      <h4 class="text-sm font-medium text-white/60 flex items-center gap-2">
+        <span class="text-lg">{cat.emoji}</span>
+        {cat.name}
+      </h4>
+      
+      <div class="flex flex-wrap gap-3">
+        {grouped[key].map((tech, i) => (
+          <div 
+            class="group relative"
+            style={`animation: pop-in 0.3s ease-out ${i * 80}ms both`}
+          >
+            <!-- Tech Badge -->
+            <div 
+              class="flex items-center gap-2 px-4 py-2.5 rounded-xl cursor-default transition-all duration-300 hover:scale-105"
+              style={`background: linear-gradient(135deg, ${tech.color}15, ${tech.color}05); border: 1px solid ${tech.color}30;`}
+            >
+              <!-- Color dot -->
+              <div 
+                class="w-3 h-3 rounded-full shrink-0"
+                style={`background: ${tech.color}; box-shadow: 0 0 10px ${tech.color}50`}
+              ></div>
+              
+              <!-- Tech name -->
+              <span class="font-medium text-white text-sm">{tech.name}</span>
+              
+              <!-- Level indicator -->
+              <div class="flex items-center gap-1 ml-1">
+                {[...Array(5)].map((_, idx) => (
+                  <div 
+                    class="w-1.5 h-1.5 rounded-full transition-all"
+                    style={`background: ${idx < Math.ceil(tech.level / 20) ? tech.color : 'rgba(255,255,255,0.1)'}`}
+                  ></div>
+                ))}
+              </div>
+            </div>
+            
+            <!-- Hover tooltip -->
+            <div class="absolute -top-10 left-1/2 -translate-x-1/2 px-2 py-1 rounded bg-black/80 text-white text-xs whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+              {tech.level}% proficiency
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  ))}
+
+  <!-- Orbit Animation (decorative) -->
+  <div class="relative h-32 mt-8 overflow-hidden rounded-xl bg-gradient-to-br from-white/[0.02] to-transparent border border-white/5">
+    <div class="absolute inset-0 flex items-center justify-center">
+      <div class="text-center">
+        <p class="text-white/30 text-sm font-mono">$ continuously_learning</p>
+        <p class="text-white/50 text-xs mt-1">Always exploring new technologies</p>
+      </div>
+    </div>
+    <!-- Floating tech dots -->
+    <div class="absolute inset-0 overflow-hidden">
+      {technologies.slice(0, 6).map((tech, i) => (
+        <div 
+          class="absolute w-2 h-2 rounded-full animate-float-orbit"
+          style={`background: ${tech.color}; left: ${20 + i * 15}%; top: 50%; animation-delay: ${i * 0.5}s; animation-duration: ${3 + i}s;`}
+        ></div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style>
+  @keyframes pop-in {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  
+  @keyframes float-orbit {
+    0%, 100% { transform: translateY(0) translateX(0); opacity: 0.5; }
+    25% { transform: translateY(-20px) translateX(10px); opacity: 1; }
+    50% { transform: translateY(0) translateX(20px); opacity: 0.5; }
+    75% { transform: translateY(20px) translateX(10px); opacity: 1; }
+  }
+  
+  .animate-float-orbit {
+    animation: float-orbit 4s ease-in-out infinite;
+  }
+</style>

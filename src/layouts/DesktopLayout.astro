@@ -1,7 +1,7 @@
 ---
-import '../styles/global.css';
-import Dock from '../components/Dock.astro';
-import { User, Clock, Wifi, Battery } from 'lucide-astro';
+import "../styles/global.css";
+import Dock from "../components/Dock.astro";
+import { User, Clock, Wifi, Battery } from "lucide-astro";
 
 interface Props {
   title?: string;
@@ -16,29 +16,49 @@ const { title = "MindOS", showDock = true } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="MindOS - Portfolio de Saúl Rocha, desarrollador web junior" />
+    <meta
+      name="description"
+      content="MindOS - Portfolio de Saúl Rocha, desarrollador web junior"
+    />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
   </head>
   <body class="min-h-screen bg-os-bg overflow-x-hidden">
+    <!-- Overlay Slot (Lock Screen, Boot Sequence) - renders above everything -->
+    <slot name="overlay" />
+
     <!-- System Menu Bar (macOS style) -->
-    <header class="fixed top-0 left-0 right-0 h-7 glass-heavy z-50 flex items-center justify-between px-4 border-b border-os-border/50">
+    <header
+      class="fixed top-0 left-0 right-0 h-7 glass-heavy z-50 flex items-center justify-between px-4 border-b border-os-border/50"
+    >
       <!-- Left: System Name -->
       <div class="flex items-center gap-4">
         <div class="flex items-center gap-2">
-          <div class="w-5 h-5 rounded-full bg-gradient-to-br from-os-accent to-os-accent-light flex items-center justify-center">
-            <span class="text-[10px] font-bold text-white">M</span>
-          </div>
+          <img
+            src="/LogoMindOS-removebg-preview.png"
+            alt="MindOS"
+            class="w-5 h-5 object-contain"
+          />
           <span class="text-os-text text-sm font-semibold">MindOS</span>
         </div>
-        <nav class="hidden md:flex items-center gap-3 text-xs text-os-text-secondary">
-          <a href="#kernel" class="hover:text-os-text transition-colors">About</a>
-          <a href="#processes" class="hover:text-os-text transition-colors">Experience</a>
-          <a href="#modules" class="hover:text-os-text transition-colors">Skills</a>
-          <a href="#logs" class="hover:text-os-text transition-colors">Contact</a>
+        <nav
+          class="hidden md:flex items-center gap-3 text-xs text-os-text-secondary"
+        >
+          <a href="#kernel" class="hover:text-os-text transition-colors"
+            >About</a
+          >
+          <a href="#processes" class="hover:text-os-text transition-colors"
+            >Experience</a
+          >
+          <a href="#modules" class="hover:text-os-text transition-colors"
+            >Skills</a
+          >
+          <a href="#logs" class="hover:text-os-text transition-colors"
+            >Contact</a
+          >
         </nav>
       </div>
-      
+
       <!-- Right: Status Icons -->
       <div class="flex items-center gap-3 text-xs text-os-text-secondary">
         <Wifi class="w-4 h-4" />
@@ -59,8 +79,11 @@ const { title = "MindOS", showDock = true } = Astro.props;
     <script>
       function updateTime() {
         const now = new Date();
-        const timeStr = now.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
-        const el = document.getElementById('system-time');
+        const timeStr = now.toLocaleTimeString("es-ES", {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+        const el = document.getElementById("system-time");
         if (el) el.textContent = timeStr;
       }
       updateTime();
