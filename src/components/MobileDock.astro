@@ -1,0 +1,197 @@
+---
+// MobileDock - Premium App Drawer experience for mobile
+import {
+    Brain,
+    HardDrive,
+    Cpu,
+    Package,
+    Sparkles,
+    Terminal,
+    Map,
+    TerminalSquare,
+    X,
+    Grid,
+} from "lucide-astro";
+
+const modules = [
+    {
+        id: "kernel",
+        name: "About",
+        Icon: Brain,
+        color: "from-blue-500 to-cyan-500",
+    },
+    {
+        id: "memory",
+        name: "Education",
+        Icon: HardDrive,
+        color: "from-purple-500 to-pink-500",
+    },
+    {
+        id: "processes",
+        name: "Experience",
+        Icon: Cpu,
+        color: "from-green-500 to-emerald-500",
+    },
+    {
+        id: "modules",
+        name: "Skills",
+        Icon: Package,
+        color: "from-orange-500 to-yellow-500",
+    },
+    {
+        id: "artifacts",
+        name: "Projects",
+        Icon: Sparkles,
+        color: "from-pink-500 to-rose-500",
+    },
+    {
+        id: "roadmap",
+        name: "Roadmap",
+        Icon: Map,
+        color: "from-amber-500 to-orange-500",
+    },
+    {
+        id: "terminal",
+        name: "Terminal",
+        Icon: TerminalSquare,
+        color: "from-emerald-500 to-teal-500",
+    },
+    {
+        id: "logs",
+        name: "Contact",
+        Icon: Terminal,
+        color: "from-cyan-500 to-blue-500",
+    },
+];
+---
+
+<!-- Bottom Pill Bar -->
+<div
+    class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-4 px-4 py-3 rounded-full glass-heavy border border-white/10 shadow-2xl"
+>
+    <!-- Time Status -->
+    <div class="flex items-center gap-2 pr-4 border-r border-white/10">
+        <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+        <span id="mobile-time" class="text-xs font-mono text-white/80"
+            >--:--</span
+        >
+    </div>
+
+    <!-- Apps Button -->
+    <button
+        id="drawer-trigger"
+        class="relative group p-2 rounded-xl bg-white/5 hover:bg-white/10 transition-colors"
+    >
+        <Grid class="w-5 h-5 text-white" />
+        <span
+            class="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-cyan-500 border-2 border-black"
+        ></span>
+    </button>
+
+    <!-- Contact Quick Action -->
+    <a
+        href="#logs"
+        class="p-2 rounded-xl bg-white/5 hover:bg-white/10 transition-colors"
+    >
+        <Terminal class="w-5 h-5 text-white/60" />
+    </a>
+</div>
+
+<!-- App Drawer Overlay -->
+<div
+    id="app-drawer"
+    class="fixed inset-0 z-[60] bg-black/60 backdrop-blur-xl opacity-0 pointer-events-none transition-all duration-300 flex flex-col items-center justify-center p-6"
+>
+    <!-- Close Button -->
+    <button
+        id="drawer-close"
+        class="absolute top-6 right-6 p-2 rounded-full bg-white/5 text-white/60 hover:text-white hover:bg-white/10 transition-colors"
+    >
+        <X class="w-6 h-6" />
+    </button>
+
+    <!-- Drawer Content -->
+    <div
+        class="w-full max-w-sm space-y-8 transform scale-95 transition-transform duration-300"
+        id="drawer-content"
+    >
+        <div class="text-center space-y-2">
+            <h2 class="text-2xl font-bold text-white">MindOS</h2>
+            <p class="text-white/40 text-sm">Select a module to launch</p>
+        </div>
+
+        <div class="grid grid-cols-4 gap-4">
+            {
+                modules.map((module, index) => (
+                    <a
+                        href={`#${module.id}`}
+                        class="drawer-item flex flex-col items-center gap-2 group"
+                        style={`animation-delay: ${index * 50}ms`}
+                    >
+                        <div
+                            class={`
+            w-14 h-14 rounded-2xl 
+            bg-gradient-to-br ${module.color}
+            flex items-center justify-center
+            shadow-lg shadow-black/20
+            group-active:scale-95 transition-transform
+          `}
+                        >
+                            <module.Icon class="w-6 h-6 text-white" />
+                        </div>
+                        <span class="text-xs text-white/60 group-hover:text-white transition-colors">
+                            {module.name}
+                        </span>
+                    </a>
+                ))
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    // Mobile Time
+    function updateMobileTime() {
+        const now = new Date();
+        const timeStr = now.toLocaleTimeString("es-ES", {
+            hour: "2-digit",
+            minute: "2-digit",
+        });
+        const el = document.getElementById("mobile-time");
+        if (el) el.textContent = timeStr;
+    }
+    setInterval(updateMobileTime, 1000);
+    updateMobileTime();
+
+    // Drawer Logic
+    const drawer = document.getElementById("app-drawer");
+    const trigger = document.getElementById("drawer-trigger");
+    const close = document.getElementById("drawer-close");
+    const content = document.getElementById("drawer-content");
+    const items = document.querySelectorAll(".drawer-item");
+
+    function openDrawer() {
+        drawer?.classList.remove("opacity-0", "pointer-events-none");
+        content?.classList.remove("scale-95");
+        content?.classList.add("scale-100");
+    }
+
+    function closeDrawer() {
+        drawer?.classList.add("opacity-0", "pointer-events-none");
+        content?.classList.add("scale-95");
+        content?.classList.remove("scale-100");
+    }
+
+    trigger?.addEventListener("click", openDrawer);
+    close?.addEventListener("click", closeDrawer);
+
+    // Close on item click
+    items.forEach((item) => {
+        item.addEventListener("click", closeDrawer);
+    });
+
+    // Close on backdrop click
+    drawer?.addEventListener("click", (e) => {
+        if (e.target === drawer) closeDrawer();
+    });
+</script>
