@@ -1,0 +1,178 @@
+---
+// Roadmap - Personal development roadmap showing long-term vision
+import { Construction, Rocket, CheckCircle2, Circle } from "lucide-astro";
+
+const roadmapData = {
+    improvingNow: {
+        title: "Improving Now",
+        icon: "🚧",
+        items: [
+            { text: "Advanced Backend Development", status: "in-progress" },
+            {
+                text: "Build native mobile version of MindOS",
+                status: "in-progress",
+            },
+            {
+                text: "Portfolio analytics & tracking system",
+                status: "planned",
+            },
+        ],
+    },
+    future: {
+        title: "Q1-Q2 2026",
+        icon: "🔜",
+        items: [
+            {
+                text: "Publish open-source UI component system",
+                status: "planned",
+            },
+            {
+                text: "Deploy real App Store with installers",
+                status: "planned",
+            },
+            { text: "Launch first commercial SaaS product", status: "planned" },
+        ],
+    },
+};
+---
+
+<div class="space-y-6">
+    <!-- Header -->
+    <div class="flex items-center justify-between">
+        <div>
+            <h3 class="text-lg font-semibold text-white">Personal Roadmap</h3>
+            <p class="text-white/50 text-sm">Where I'm heading</p>
+        </div>
+        <div
+            class="px-3 py-1.5 rounded-full bg-gradient-to-r from-cyan-500/20 to-purple-500/20 border border-cyan-500/30"
+        >
+            <span class="text-xs font-medium text-cyan-400"
+                >Long-term focused</span
+            >
+        </div>
+    </div>
+
+    <!-- Roadmap Sections -->
+    <div class="grid gap-4 md:grid-cols-2">
+        <!-- Improving Now -->
+        <div
+            class="relative p-5 rounded-2xl bg-gradient-to-br from-amber-500/5 to-orange-500/5 border border-amber-500/20 hover:border-amber-500/40 transition-all"
+        >
+            <div class="flex items-center gap-3 mb-4">
+                <span class="text-2xl">{roadmapData.improvingNow.icon}</span>
+                <h4 class="text-base font-semibold text-white">
+                    {roadmapData.improvingNow.title}
+                </h4>
+            </div>
+
+            <div class="space-y-3">
+                {
+                    roadmapData.improvingNow.items.map((item, i) => (
+                        <div
+                            class="flex items-start gap-3 group"
+                            style={`animation: fade-slide-in 0.3s ease-out ${i * 100}ms both`}
+                        >
+                            <div class="mt-0.5 shrink-0">
+                                {item.status === "in-progress" ? (
+                                    <div class="w-5 h-5 rounded border-2 border-amber-400 flex items-center justify-center">
+                                        <div class="w-2 h-2 rounded-sm bg-amber-400 animate-pulse" />
+                                    </div>
+                                ) : (
+                                    <div class="w-5 h-5 rounded border-2 border-white/20" />
+                                )}
+                            </div>
+                            <span
+                                class={`text-sm ${item.status === "in-progress" ? "text-white" : "text-white/60"}`}
+                            >
+                                {item.text}
+                            </span>
+                        </div>
+                    ))
+                }
+            </div>
+
+            <!-- Progress indicator -->
+            <div class="mt-4 pt-4 border-t border-white/5">
+                <div
+                    class="flex items-center justify-between text-xs text-white/40"
+                >
+                    <span>Progress</span>
+                    <span>2/3 active</span>
+                </div>
+                <div
+                    class="mt-2 h-1.5 rounded-full bg-white/10 overflow-hidden"
+                >
+                    <div
+                        class="h-full w-2/3 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 animate-pulse"
+                    >
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Q1-Q2 2026 -->
+        <div
+            class="relative p-5 rounded-2xl bg-gradient-to-br from-cyan-500/5 to-purple-500/5 border border-cyan-500/20 hover:border-cyan-500/40 transition-all"
+        >
+            <div class="flex items-center gap-3 mb-4">
+                <span class="text-2xl">{roadmapData.future.icon}</span>
+                <h4 class="text-base font-semibold text-white">
+                    {roadmapData.future.title}
+                </h4>
+            </div>
+
+            <div class="space-y-3">
+                {
+                    roadmapData.future.items.map((item, i) => (
+                        <div
+                            class="flex items-start gap-3 group"
+                            style={`animation: fade-slide-in 0.3s ease-out ${(i + 3) * 100}ms both`}
+                        >
+                            <div class="mt-0.5 shrink-0">
+                                <div class="w-5 h-5 rounded border-2 border-white/20 border-dashed" />
+                            </div>
+                            <span class="text-sm text-white/60">
+                                {item.text}
+                            </span>
+                        </div>
+                    ))
+                }
+            </div>
+
+            <!-- Coming soon badge -->
+            <div class="mt-4 pt-4 border-t border-white/5">
+                <div class="flex items-center gap-2 text-xs text-cyan-400">
+                    <Rocket class="w-3.5 h-3.5" />
+                    <span>Coming in 6 months</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vision Statement -->
+    <div
+        class="relative p-4 rounded-xl bg-gradient-to-r from-white/[0.02] to-transparent border border-white/5 overflow-hidden"
+    >
+        <div
+            class="absolute inset-0 bg-gradient-to-r from-cyan-500/5 via-transparent to-purple-500/5"
+        >
+        </div>
+        <p class="relative text-center text-sm text-white/50 italic">
+            "Building towards autonomy, product ownership, and technical
+            excellence."
+        </p>
+    </div>
+</div>
+
+<style>
+    @keyframes fade-slide-in {
+        from {
+            opacity: 0;
+            transform: translateX(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+</style>

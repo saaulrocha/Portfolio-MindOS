@@ -2,7 +2,7 @@
 
 export const profile = {
     name: "Saúl Rocha",
-    title: "Web Developer",
+    title: "Product-Focused Developer",
     email: "saulrocharodriguez@gmail.com",
     phone: "+34 603 731 964",
     birthDate: "17/05/2004",
@@ -14,7 +14,7 @@ export const profile = {
         portfolio: "https://saulrocha.com"
     },
 
-    bio: `Junior developer trained at 42 Madrid and DAM, with experience in web development, IT support, and working in international environments. I lived 4 months in the Netherlands, strengthening my English, autonomy, and adaptability.`,
+    bio: `I build digital systems that feel like tools, not websites. My focus is turning business needs into structured and scalable software. I love designing products that feel alive, interactive, and technically solid.`,
 
     kernelVersion: "1.0.0",
     systemName: "MindOS",

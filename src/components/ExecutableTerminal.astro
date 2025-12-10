@@ -1,0 +1,309 @@
+---
+// ExecutableTerminal - Interactive terminal with real commands
+import { profile } from "../data/profile";
+---
+
+<div class="terminal-container h-full flex flex-col">
+    <!-- Terminal Header -->
+    <div
+        class="flex items-center justify-between px-4 py-2 bg-black/50 border-b border-white/10"
+    >
+        <div class="flex items-center gap-2">
+            <div class="flex gap-1.5">
+                <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+            </div>
+            <span class="text-white/40 text-xs font-mono ml-2"
+                >mindos-terminal</span
+            >
+        </div>
+        <span class="text-white/30 text-xs font-mono">v1.0.0</span>
+    </div>
+
+    <!-- Terminal Output -->
+    <div
+        id="terminal-output"
+        class="flex-1 overflow-y-auto p-4 font-mono text-sm space-y-2 min-h-[300px] max-h-[400px]"
+    >
+        <!-- Welcome Message -->
+        <div class="text-cyan-400">
+            ╭───────────────────────────────────────╮
+        </div>
+        <div class="text-cyan-400">
+            │ <span class="text-white font-bold">MindOS Terminal</span> - Interactive
+            Shell │
+        </div>
+        <div class="text-cyan-400">
+            │ Type <span class="text-yellow-400">help</span> to see available commands
+            │
+        </div>
+        <div class="text-cyan-400">
+            ╰───────────────────────────────────────╯
+        </div>
+        <div class="h-2"></div>
+    </div>
+
+    <!-- Terminal Input -->
+    <div
+        class="flex items-center gap-2 px-4 py-3 bg-black/30 border-t border-white/10"
+    >
+        <span class="text-emerald-400 font-mono text-sm">❯</span>
+        <input
+            type="text"
+            id="terminal-input"
+            class="flex-1 bg-transparent text-white font-mono text-sm outline-none placeholder:text-white/20"
+            placeholder="Type a command..."
+            autocomplete="off"
+            spellcheck="false"
+        />
+        <span id="cursor-blink" class="w-2 h-5 bg-white/80 animate-pulse"
+        ></span>
+    </div>
+</div>
+
+<script define:vars={{ profile }}>
+    const commands = {
+        help: () => `
+<span class="text-yellow-400">Available commands:</span>
+
+  <span class="text-cyan-400">whoami</span>          → Show profile info
+  <span class="text-cyan-400">show projects</span>   → List all projects
+  <span class="text-cyan-400">show projects --featured</span> → Featured only
+  <span class="text-cyan-400">contact</span>         → Contact information
+  <span class="text-cyan-400">run system-info</span> → System specifications
+  <span class="text-cyan-400">download cv</span>     → Download CV (PDF)
+  <span class="text-cyan-400">skills</span>          → Technology stack
+  <span class="text-cyan-400">clear</span>           → Clear terminal
+  <span class="text-cyan-400">exit</span>            → Close terminal
+`,
+        whoami: () => `
+<span class="text-emerald-400">┌─ Profile ────────────────────────────────┐</span>
+│
+│  <span class="text-white font-bold">${profile.name}</span>
+│  <span class="text-cyan-400">${profile.title}</span>
+│
+│  <span class="text-white/60">${profile.bio}</span>
+│
+│  📍 ${profile.location}
+│  📧 ${profile.email}
+│
+<span class="text-emerald-400">└───────────────────────────────────────────┘</span>
+`,
+        contact: () => `
+<span class="text-purple-400">┌─ Contact ────────────────────────────────┐</span>
+│
+│  📧 Email:    <a href="mailto:${profile.email}" class="text-cyan-400 hover:underline">${profile.email}</a>
+│  📱 Phone:    <span class="text-white">${profile.phone}</span>
+│  💼 LinkedIn: <a href="${profile.links.linkedin}" target="_blank" class="text-cyan-400 hover:underline">linkedin.com/in/saaulrocha</a>
+│  🐙 GitHub:   <a href="${profile.links.github}" target="_blank" class="text-cyan-400 hover:underline">github.com/saaulrocha</a>
+│
+<span class="text-purple-400">└───────────────────────────────────────────┘</span>
+`,
+        "show projects": () => `
+<span class="text-pink-400">┌─ Projects ───────────────────────────────┐</span>
+│
+│  <span class="text-white font-bold">1. Impulso Web</span>
+│     High-converting agency website
+│     <span class="text-white/40">Tech: HTML, CSS, JavaScript</span>
+│
+│  <span class="text-white font-bold">2. Crypto Dashboard</span>
+│     Real-time market intelligence
+│     <span class="text-white/40">Tech: TypeScript, Angular, REST API</span>
+│
+│  <span class="text-white font-bold">3. MindOS Portfolio</span>
+│     OS-style portfolio experience
+│     <span class="text-white/40">Tech: Astro, TypeScript, Tailwind</span>
+│
+<span class="text-pink-400">└───────────────────────────────────────────┘</span>
+`,
+        "show projects --featured": () => `
+<span class="text-yellow-400">★ Featured Projects</span>
+
+<span class="text-white font-bold">Impulso Web</span> <span class="text-emerald-400">[HIGH CONVERSION]</span>
+  Agency website optimized for SEO and CTAs
+  <span class="text-white/40">→ Reusable components for any client</span>
+
+<span class="text-white font-bold">Crypto Dashboard</span> <span class="text-emerald-400">[REAL-TIME]</span>
+  Market intelligence for traders
+  <span class="text-white/40">→ Clarity over chaos</span>
+
+<span class="text-white font-bold">MindOS</span> <span class="text-emerald-400">[MEMORABLE]</span>
+  Portfolio as a product experience
+  <span class="text-white/40">→ Boot sequence, lock screen, terminal</span>
+`,
+        "run system-info": () => `
+<span class="text-orange-400">┌─ System Information ─────────────────────┐</span>
+│
+│  OS:         MindOS v${profile.kernelVersion}
+│  Kernel:     Product-Focused
+│  Uptime:     ${Math.floor(Math.random() * 365)} days
+│  Shell:      InteractiveTerminal/1.0
+│  Terminal:   mindos-terminal
+│
+│  <span class="text-emerald-400">STATUS: All systems operational</span>
+│
+│  Memory:     ████████░░ 80%
+│  Creativity: ██████████ 100%
+│  Coffee:     █████████░ 90%
+│
+<span class="text-orange-400">└───────────────────────────────────────────┘</span>
+`,
+        "download cv": () => {
+            // Trigger CV download
+            const link = document.createElement("a");
+            link.href = "/cv.pdf";
+            link.download = "Saul_Rocha_CV.pdf";
+            link.click();
+            return `
+<span class="text-emerald-400">✓ Downloading CV...</span>
+  File: Saul_Rocha_CV.pdf
+  
+<span class="text-white/40">If download doesn't start, CV may not be available yet.</span>
+`;
+        },
+        skills: () => `
+<span class="text-blue-400">┌─ Tech Stack ─────────────────────────────┐</span>
+│
+│  <span class="text-yellow-400">Languages</span>
+│  ├─ TypeScript  ████████░░ 90%
+│  ├─ Java        ████████░░ 85%
+│  ├─ C           ████████░░ 85%
+│  └─ SQL         ████████░░ 80%
+│
+│  <span class="text-yellow-400">Frameworks</span>
+│  ├─ Angular     ████████░░ 85%
+│  ├─ React       ███████░░░ 75%
+│  ├─ Astro       ███████░░░ 75%
+│  └─ Flutter     ███████░░░ 70%
+│
+│  <span class="text-yellow-400">Tools</span>
+│  ├─ Git         █████████░ 90%
+│  ├─ Docker      ██████░░░░ 65%
+│  └─ Linux       ████████░░ 80%
+│
+<span class="text-blue-400">└───────────────────────────────────────────┘</span>
+`,
+        clear: () => "CLEAR",
+        exit: () => {
+            window.location.href = "#kernel";
+            return '<span class="text-white/40">Redirecting to home...</span>';
+        },
+    };
+
+    // Command history
+    let commandHistory = [];
+    let historyIndex = -1;
+
+    // Initialize terminal
+    document.addEventListener("DOMContentLoaded", () => {
+        const input = document.getElementById("terminal-input");
+        const output = document.getElementById("terminal-output");
+
+        if (!input || !output) return;
+
+        input.focus();
+
+        // Handle input
+        input.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                const cmd = input.value.trim().toLowerCase();
+                if (!cmd) return;
+
+                // Add to history
+                commandHistory.unshift(cmd);
+                historyIndex = -1;
+
+                // Show command
+                output.innerHTML += `<div><span class="text-emerald-400">❯</span> <span class="text-white">${cmd}</span></div>`;
+
+                // Execute command
+                let result;
+                if (commands[cmd]) {
+                    result =
+                        typeof commands[cmd] === "function"
+                            ? commands[cmd]()
+                            : commands[cmd];
+                } else if (cmd.startsWith("show projects")) {
+                    result = commands["show projects --featured"]();
+                } else {
+                    result = `<span class="text-red-400">Command not found: ${cmd}</span>\nType <span class="text-yellow-400">help</span> for available commands.`;
+                }
+
+                if (result === "CLEAR") {
+                    output.innerHTML = "";
+                } else {
+                    output.innerHTML += `<div class="whitespace-pre-wrap text-white/80">${result}</div>`;
+                }
+
+                // Clear input and scroll
+                input.value = "";
+                output.scrollTop = output.scrollHeight;
+            }
+
+            // History navigation
+            if (e.key === "ArrowUp") {
+                e.preventDefault();
+                if (historyIndex < commandHistory.length - 1) {
+                    historyIndex++;
+                    input.value = commandHistory[historyIndex];
+                }
+            }
+            if (e.key === "ArrowDown") {
+                e.preventDefault();
+                if (historyIndex > 0) {
+                    historyIndex--;
+                    input.value = commandHistory[historyIndex];
+                } else {
+                    historyIndex = -1;
+                    input.value = "";
+                }
+            }
+
+            // Tab autocomplete
+            if (e.key === "Tab") {
+                e.preventDefault();
+                const partial = input.value.toLowerCase();
+                const matches = Object.keys(commands).filter((c) =>
+                    c.startsWith(partial),
+                );
+                if (matches.length === 1) {
+                    input.value = matches[0];
+                } else if (matches.length > 1) {
+                    output.innerHTML += `<div class="text-white/40">${matches.join("  ")}</div>`;
+                    output.scrollTop = output.scrollHeight;
+                }
+            }
+        });
+
+        // Click to focus
+        output.addEventListener("click", () => input.focus());
+    });
+</script>
+
+<style>
+    .terminal-container {
+        background: linear-gradient(
+            180deg,
+            rgba(0, 0, 0, 0.9) 0%,
+            rgba(0, 0, 0, 0.95) 100%
+        );
+    }
+
+    #terminal-output::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    #terminal-output::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    #terminal-output::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 3px;
+    }
+
+    #terminal-output::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+</style>

@@ -6,11 +6,13 @@ import { profile, experience, education, technologies, languages, projects } fro
 import { 
   Brain, HardDrive, Cpu, Package, Sparkles, Terminal,
   MapPin, Calendar, Github, Linkedin, Mail, Phone, ExternalLink,
-  GraduationCap, Briefcase, Code, CircleCheck, Clock, ShoppingBag
+  GraduationCap, Briefcase, Code, CircleCheck, Clock, ShoppingBag, Map, TerminalSquare
 } from 'lucide-astro';
 import LockScreen from '../components/LockScreen.astro';
 import AppStore from '../components/AppStore.astro';
 import SkillsCloud from '../components/SkillsCloud.astro';
+import Roadmap from '../components/Roadmap.astro';
+import ExecutableTerminal from '../components/ExecutableTerminal.astro';
 ---
 
 <DesktopLayout title="MindOS — Saúl Rocha">
@@ -183,6 +185,16 @@ import SkillsCloud from '../components/SkillsCloud.astro';
     ═══════════════════════════════════════════════════════════════════════ -->
     <Window id="artifacts" title="App Store — Projects" icon={ShoppingBag}>
       <AppStore />
+    </Window>
+    
+    <!-- Roadmap: Personal Development -->
+    <Window id="roadmap" title="Personal Roadmap" icon={Map}>
+      <Roadmap />
+    </Window>
+    
+    <!-- Interactive Terminal: The Viral Feature -->
+    <Window id="terminal" title="Terminal — Interactive" icon={TerminalSquare} variant="terminal">
+      <ExecutableTerminal />
     </Window>
     
     <!-- Contact: Logs -->
